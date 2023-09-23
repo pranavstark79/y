@@ -1,16 +1,33 @@
-import React from "react";
-
-import IntlMessages from "util/IntlMessages";
+import React, { Fragment } from "react";
+// import IntlMessages from "util/IntlMessages";
+import DefaultCard from "../../components/Card";
+import marketImg from "../../assets/img/market.webp";
+import securityImg from "../../assets/img/protection-shield.png";
+import { FolderOpenTwoTone } from "@ant-design/icons";
 
 const SamplePage = () => {
+
   return (
-    <div>
-      <h2 className="title gx-mb-4"><IntlMessages id="sidebar.samplePage"/></h2>
+    <div style={{ display: "flex" }}>
+      
+        <DefaultCard
+          pageLink={'/market'}
+          width={200}
+          title="Market"
+          description={"Analysis & Investing"}
+          imgSrc={marketImg}
+        />
+    
 
-      <div className="gx-d-flex justify-content-center">
-        <h4>Start building your app. Happy Coding!</h4>
-      </div>
-
+     
+        <DefaultCard
+        pageLink={'/security'}
+          width={200}
+          title="Security"
+          description={"Security & Access"}
+          imgSrc={securityImg}
+        />
+    
     </div>
   );
 };
