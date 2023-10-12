@@ -25,11 +25,28 @@ const getMonthNum = (dateStr) => {
     }
 }
 
+const parseHTML = (htmlStr) => {
+    // console.log(htmlStr);
+    let cancelledStr = addCancelled(htmlStr);
+    let successStr = addSuccessful(cancelledStr);
+    return successStr;
+}
+
+
+function addCancelled(htmlStr) {
+    return htmlStr.replaceAll('<span class="ord131StatusColor" style="background: rgb(235, 91, 60);"></span>', `<span class="ord131StatusColor" style="background: rgb(235, 91, 60);"> ##Cancelled</span>`);
+}
+
+function addSuccessful(htmlStr) {
+    return htmlStr.replaceAll('<span class="ord131StatusColor" style="background: rgb(0, 179, 134);"></span>', `<span class="ord131StatusColor" style="background: rgb(0, 179, 134);"> ##Executed</span>`);
+}
+
 
 const pnlCalculator = () => {
 
 }
 
 module.exports = {
-    getMonthNum
+    getMonthNum,
+    parseHTML
 }

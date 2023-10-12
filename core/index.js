@@ -6,10 +6,10 @@ const { calculateDelta } = require('./calcDelta');
 
 const YEAR = 2023;
 
-const { getMonthNum } = utils;
+const { getMonthNum, parseHTML } = utils;
 
 const folderPath = 'C:\\Users\\pranav2.kumar\\Desktop\\me\\market\\orders';
-const fileName = 'Orders - Groww.html';
+const fileName = 'Orders_Groww_0910.html';
 const filePath = `${folderPath}/${fileName}`;
 
 const data = [];
@@ -17,15 +17,15 @@ let tArray = [];
 
 
 const htmlData = fs.readFileSync(filePath, 'utf8');
-const $ = cheerio.load(htmlData);
+const parsedHtml = parseHTML(htmlData);
+fs.writeFileSync('./data/index2.html', parsedHtml);
+const $ = cheerio.load(parsedHtml);
 
 const orderDay = ($('.ord131DateStyle').text()).split(',')[1];
 const { month, day } = getMonthNum(orderDay);
 
 const dateStr = `${YEAR}-${month}-${day}`;
 let counter = 0;
-// var target12 = '2016-12-08 9:32:45 PM';
-// console.log(moment(target12, 'YYYY-MM-DD h:m:s A').format('YYYY-MM-DD HH:mm:ss'));
 
 
 const main = () => {
@@ -33,7 +33,7 @@ const main = () => {
         let tData = {};
         const text = $(elm).text();
         if (text.includes('Call')) {
-            tData['chain'] = text;
+            tData['chain'] = text.replace(/ /g, '');
             tData['trade'] = 'Call'
 
             if (text.includes('Buy')) {
@@ -46,7 +46,7 @@ const main = () => {
         }
 
         if (text.includes('Put')) {
-            tData['chain'] = text;
+            tData['chain'] = text.replace(/ /g, '');
             tData['trade'] = 'Put'
 
             if (text.includes('Buy')) {
@@ -71,15 +71,14 @@ const main = () => {
         }
 
         if (text.includes('AM') || text.includes('PM')) {
-            tData['time'] = text;
+            const strArr = text.split('##');
+            tData['time'] = strArr[0].trim();
+            tData['status'] = strArr[1].trim();
         }
 
         tArray.push(tData);
 
-        // console.log("==>", index);
-        // console.log(tArray);
         if ((index + 1) % 4 == 0) {
-            // console.log("::::", tArray);
             let obj = {};
             for (let i = 0; i < tArray.length; i++) {
                 const tObj = tArray[i];
@@ -95,6 +94,8 @@ const main = () => {
             obj.utcTime = utcTimeStamp;
             counter++;
             obj.id = counter;
+            const finalCost = (parseInt(obj.qty) * (parseFloat(obj.avgPrice.split('₹')[1]) ? parseFloat(obj.avgPrice.split('₹')[1]) : 0))
+            obj.cost = Math.ceil(finalCost)
             data.push(obj);
         }
 
