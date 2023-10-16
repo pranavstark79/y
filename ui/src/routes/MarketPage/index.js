@@ -12,7 +12,7 @@ const MarketPage = () => {
   return (
     <div style={{ display: "flex" }}>
       <DefaultCard
-        pageLink={"/security"}
+        pageLink={"/chain/midcap"}
         width={200}
         title="MidCapNifty"
         description={"Expiry: Monday"}
@@ -20,7 +20,7 @@ const MarketPage = () => {
       />
 
       <DefaultCard
-        pageLink={"/security"}
+        pageLink={"/chain/finnifty"}
         width={200}
         title="FinNifty"
         description={"Expiry: Tuesday"}
@@ -28,7 +28,7 @@ const MarketPage = () => {
       />
 
       <DefaultCard
-        pageLink={"/security"}
+        pageLink={"/chain/banknifty"}
         width={200}
         title="BankNifty"
         description={"Expiry: Wednesday"}
@@ -36,7 +36,7 @@ const MarketPage = () => {
       />
 
       <DefaultCard
-        pageLink={"/market"}
+        pageLink={"/market/nifty"}
         width={200}
         title="Nifty"
         description={"Expiry: Thursday"}
@@ -44,7 +44,7 @@ const MarketPage = () => {
       />
 
       <DefaultCard
-        pageLink={"/security"}
+        pageLink={"/chain/sensex"}
         width={200}
         title="Sensex"
         description={"Expiry: Friday"}
